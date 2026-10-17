@@ -1,0 +1,18 @@
+{
+  "name": "p5.ni.js",
+  "version": "0.0.0",
+  "description": "Template project for starting an addon for p5.js",
+  "type": "module",
+  "exports": {
+    ".": "./dist/p5.ni.esm.js"
+  },
+  "scripts": {
+    "build": "rolldown -c rolldown.config.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "rolldown": "^1.2.14"
+  },
+  "dependencies": {}
+}
