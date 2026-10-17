@@ -2,17 +2,31 @@
   "name": "p5.ni.js",
   "version": "0.0.0",
   "description": "Template project for starting an addon for p5.js",
+  "license": "MIT",
+  "author": "",
   "type": "module",
   "exports": {
     ".": "./dist/p5.ni.esm.js"
   },
   "scripts": {
-    "build": "rolldown -c rolldown.config.js"
+    "build": "rolldown -c rolldown.config.js",
+    "prepare": "vp config"
   },
-  "author": "",
-  "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
-    "rolldown": "^1.2.14"
+    "rolldown": "^1.2.14",
+    "vite-plus": "catalog:"
   },
-  "dependencies": {}
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.14.0",
+      "onFail": "download"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "26.12.0",
+      "onFail": "download"
+    }
+  }
 }

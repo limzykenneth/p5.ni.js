@@ -1,17 +1,17 @@
 export default [
   {
-    input: 'src/main.js',
+    input: "src/main.js",
     output: {
-      file: 'dist/p5.ni.min.js',
-      format: 'iife',
-      minify: true
-    }
+      file: "dist/p5.ni.min.js",
+      format: "iife",
+      minify: true,
+    },
   },
   {
-    input: 'src/main.js',
+    input: "src/main.js",
     output: {
-      file: 'dist/p5.ni.esm.js',
-      format: 'esm'
-    }
-  }
+      file: "dist/p5.ni.esm.js",
+      format: "esm",
+    },
+  },
 ];

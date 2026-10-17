@@ -14,17 +14,17 @@ export function p5NewInstance(p5, fn, lifecycles) {
     }
   }
 
-  p5.create = function(funcs) {
-     new p5(function (p) {
+  p5.create = function (funcs) {
+    new p5(function (p) {
       for (const k in funcs) {
         p[k] = function () {
           p5.create.instance = p;
           let result = funcs[k]();
           return wrapP5Promise(result, p);
-        }
+        };
       }
     });
-  }
+  };
 
   class Placeholder {
     constructor(label) {
@@ -43,10 +43,10 @@ export function p5NewInstance(p5, fn, lifecycles) {
 
   for (const k in p5.prototype) {
     // Skip internals
-		if (k.startsWith("_") || k === "length") continue;
+    if (k.startsWith("_") || k === "length") continue;
 
-		if (typeof p5.prototype[k] === 'function') {
-      p5.create[k] = function(...args) {
+    if (typeof p5.prototype[k] === "function") {
+      p5.create[k] = function (...args) {
         args = args.map((arg) => {
           if (arg instanceof Placeholder) {
             return arg.value;
@@ -58,15 +58,15 @@ export function p5NewInstance(p5, fn, lifecycles) {
         const result = Reflect.apply(p5.prototype[k], p5.create.instance, args);
         return wrapP5Promise(result, instance);
       };
-		} else if (k === "mouseButton" || k === "touches") {
+    } else if (k === "mouseButton" || k === "touches") {
       p5.create[k] = new Proxy(new Placeholder(k), {
         get(target, prop) {
           if (prop === "value") {
             return Reflect.get(target, prop);
-          }else{
+          } else {
             return Reflect.get(p5.create.instance.pixels, prop);
           }
-        }
+        },
       });
     } else {
       p5.create[k] = new Placeholder(k);
@@ -77,13 +77,13 @@ export function p5NewInstance(p5, fn, lifecycles) {
     get(target, prop) {
       if (prop === "value") {
         return Reflect.get(target, prop);
-      }else{
+      } else {
         return Reflect.get(p5.create.instance.pixels, prop);
       }
     },
     set(target, prop, value) {
       Reflect.set(p5.create.instance.pixels, prop, value);
-    }
+    },
   });
 
   // This works in the browser js console but not the web editor console
