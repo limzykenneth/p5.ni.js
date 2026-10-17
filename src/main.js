@@ -43,9 +43,9 @@ export function p5NewInstance(p5, fn, lifecycles) {
 
   for (const k in p5.prototype) {
     // Skip internals
-    if (k.startsWith("_")) continue;
+		if (k.startsWith("_") || k === "length") continue;
 
-    if (typeof p5.prototype[k] === 'function') {
+		if (typeof p5.prototype[k] === 'function') {
       p5.create[k] = function(...args) {
         args = args.map((arg) => {
           if (arg instanceof Placeholder) {
@@ -58,7 +58,7 @@ export function p5NewInstance(p5, fn, lifecycles) {
         const result = Reflect.apply(p5.prototype[k], p5.create.instance, args);
         return wrapP5Promise(result, instance);
       };
-    } else if (k === "mouseButton" || k === "touches") {
+		} else if (k === "mouseButton" || k === "touches") {
       p5.create[k] = new Proxy(new Placeholder(k), {
         get(target, prop) {
           if (prop === "value") {
