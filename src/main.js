@@ -14,6 +14,8 @@ export function p5NewInstance(p5, fn, lifecycles) {
     }
   }
 
+  p5.globals = {};
+
   p5.create = function (funcs) {
     new p5(function (p) {
       for (const k in funcs) {
@@ -43,10 +45,10 @@ export function p5NewInstance(p5, fn, lifecycles) {
 
   for (const k in p5.prototype) {
     // Skip internals
-    if (k.startsWith("_") || k === "length") continue;
+    if (k.startsWith("_")) continue;
 
     if (typeof p5.prototype[k] === "function") {
-      p5.create[k] = function (...args) {
+      p5.globals[k] = function (...args) {
         args = args.map((arg) => {
           if (arg instanceof Placeholder) {
             return arg.value;
@@ -59,7 +61,7 @@ export function p5NewInstance(p5, fn, lifecycles) {
         return wrapP5Promise(result, instance);
       };
     } else if (k === "mouseButton" || k === "touches") {
-      p5.create[k] = new Proxy(new Placeholder(k), {
+      p5.globals[k] = new Proxy(new Placeholder(k), {
         get(target, prop) {
           if (prop === "value") {
             return Reflect.get(target, prop);
@@ -69,11 +71,11 @@ export function p5NewInstance(p5, fn, lifecycles) {
         },
       });
     } else {
-      p5.create[k] = new Placeholder(k);
+      p5.globals[k] = new Placeholder(k);
     }
   }
 
-  p5.create.pixels = new Proxy(new Placeholder("pixels"), {
+  p5.globals.pixels = new Proxy(new Placeholder("pixels"), {
     get(target, prop) {
       if (prop === "value") {
         return Reflect.get(target, prop);

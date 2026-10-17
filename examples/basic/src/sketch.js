@@ -15,7 +15,7 @@ const {
   line,
   triangle,
   quad,
-} = p5.create;
+} = p5.globals;
 
 function setup() {
   // Create screen reader accessible description
