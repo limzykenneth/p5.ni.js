@@ -1,5 +1,7 @@
 # p5.js New Instance Mode (WIP)
 
+[![pkg.pr.new](https://pkg.pr.new/badge/limzykenneth/p5.ni.js)](https://pkg.pr.new/~/limzykenneth/p5.ni.js)
+
 This is a work in progress experiment on a new instance mode syntax of p5.js. **This is still in the early experiment and proposal stage and does not represent a definite future inclusion as part of core p5.js.**
 
 ## Usage
