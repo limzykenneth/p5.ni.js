@@ -2,8 +2,11 @@
   "name": "p5.ni.js",
   "version": "0.0.0",
   "description": "Template project for starting an addon for p5.js",
-  "license": "MIT",
-  "author": "",
+  "license": "LGPL-2.1",
+  "author": {
+    "name": "Kenneth Lim",
+    "email": "limzy.kenneth@gmail.com"
+  },
   "type": "module",
   "exports": {
     ".": "./dist/p5.ni.esm.js"
