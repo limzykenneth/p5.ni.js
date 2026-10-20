@@ -8,6 +8,20 @@ This is a work in progress experiment on a new instance mode syntax of p5.js. **
 
 For usage example, have a look at the examples in the `examples` folder. Detailed documentation will come after the API is tested and stable.
 
+```js
+const { createCanvas, stroke, frameRate, rect, width, height } = p5.globals;
+
+function setup() {
+  createCanvas(720, 400);
+  stroke(255);
+  frameRate(30);
+  fill("black");
+  rect(width / 4, height / 4, width / 2, height / 2);
+}
+
+p5.create({ setup });
+```
+
 ## Motivation
 
 I chanced upon Anthony Fu's idea from a couple years ago: [p5i](https://github.com/antfu/p5i) _"p5.js, but with more friendly instance mode APIs"_, I would highly encourage you to start there in terms of the problems, ideas, and goals. In essence, the current way instance mode is defined in p5.js has a very different API as compared to global mode.
@@ -19,6 +33,7 @@ p5i's solution is quite elegant and crucially does not unncessarily pollutes the
 This essentially means that if at all possible, it would be great to avoid function parameter destructuring in p5.js user defined functions such as `setup()` and `draw()`.
 
 ```js
+// p5i example (❌ does not work with this library)
 // We want to avoid this
 function setup({ createCanvas, stroke, frameRate }) {
   createCanvas(720, 400);
@@ -30,6 +45,7 @@ function setup({ createCanvas, stroke, frameRate }) {
 While p5i has a way to address this:
 
 ```js
+// p5i example (❌ does not work with this library)
 const { mount, createCanvas, stroke, frameRate, background, line } = p5i();
 
 function setup() {
