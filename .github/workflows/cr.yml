@@ -18,15 +18,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: voidzero-dev/setup-vp@68f39c78aaf39be468cabd2afb09c162574c84af
         with:
-          node-version: 26
-
-      - name: Install dependencies
-        run: npm ci
+          node-version: "26"
+          cache: true
 
       - name: Build library
-        run: npm run build
+        run: vpr build
 
       - name: Publish library
         run: npx pkg-pr-new publish --commentWithSha
