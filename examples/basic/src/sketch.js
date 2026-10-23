@@ -1,5 +1,3 @@
-p5.instance = true;
-
 const {
   textOutput,
   createCanvas,

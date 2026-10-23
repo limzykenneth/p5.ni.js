@@ -17,6 +17,7 @@ export function p5NewInstance(p5, fn, lifecycles) {
   p5.globals = {};
 
   p5.create = function (funcs) {
+    p5.instance = true;
     new p5(function (p) {
       for (const k in funcs) {
         p[k] = function () {
