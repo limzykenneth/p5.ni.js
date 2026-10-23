@@ -6,7 +6,25 @@ This is a work in progress experiment on a new instance mode syntax of p5.js. **
 
 ## Usage
 
-For usage example, have a look at the examples in the `examples` folder. Detailed documentation will come after the API is tested and stable.
+The main goal for this library is to enable use of global mode code in any environment such as ESM, JSX, Vue SFC, and others where namespace pollution is not desired, with minimal addition and no change to global mode code.
+
+If you are using regular `<script>` tags, include the library after including p5.js in the `<head>` tag:
+
+```html
+<script src="./p5.js"></script>
+<script src="./p5.ni.min.js"></script>
+```
+
+If you are using ESM, import the library and register is as an addon library:
+
+```js
+import p5 from "./p5.esm.js";
+import { p5NewInstance } from "./p5.ni.esm.js";
+
+p5.registerAddon(p5NewInstance);
+```
+
+After including the library in either methods above, you can write your p5 sketch as you would write global mode code, the main additions are that for each p5 functions or variables that you use, you need to import them through destructuring from `p5.globals` and you need to call `p5.create()` and passing an object of the p5 global functions you have defined (`setup`, `draw`, `mouseClicked`, etc):
 
 ```js
 const { createCanvas, stroke, frameRate, rect, width, height } = p5.globals;
@@ -21,6 +39,8 @@ function setup() {
 
 p5.create({ setup });
 ```
+
+For more usage example, have a look at the examples in the `examples` folder. Detailed documentation will come after the API is tested and stable.
 
 ## Motivation
 
