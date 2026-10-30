@@ -137,6 +137,11 @@ Another area of work is some quality of life issues such as attaching the create
 
 Finally a further stretch goal is that as a sketch gets more and more complicated, the number of things that needs to be destructured from `p5.globals` can get unwieldy and a user need to remember to add entries to the destructuring list as they use additional p5 functions and variables. To alleviate this a bit, an LSP can be written for users to install that provides autocomplete suggestions that when chosen also adds the p5 member to the destructuring list automatically.
 
+- [x] Attach sketch to DOM node
+- [ ] API naming finalization
+- [ ] Unit tests
+- [ ] LSP (?)
+
 ## Name?
 
 The name of the library is WIP, `p5.ni.js` where `ni` simply stand for "**n**ew **i**nstance". It's not a good name but I'm not too bothered about it at this point.
