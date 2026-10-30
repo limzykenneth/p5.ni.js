@@ -16,7 +16,7 @@ export function p5NewInstance(p5, fn, lifecycles) {
 
   p5.globals = {};
 
-  p5.create = function (funcs) {
+  p5.create = function (funcs, el) {
     p5.instance = true;
     new p5(function (p) {
       for (const k in funcs) {
@@ -26,7 +26,7 @@ export function p5NewInstance(p5, fn, lifecycles) {
           return wrapP5Promise(result, p);
         };
       }
-    });
+    }, el);
   };
 
   class Placeholder {
@@ -76,6 +76,8 @@ export function p5NewInstance(p5, fn, lifecycles) {
     }
   }
 
+  // This is manually attached because class getters are not attached
+  // to the prototype and so won't be available on iteration
   p5.globals.pixels = new Proxy(new Placeholder("pixels"), {
     get(target, prop) {
       if (prop === "value") {
@@ -88,23 +90,6 @@ export function p5NewInstance(p5, fn, lifecycles) {
       Reflect.set(p5.create.instance.pixels, prop, value);
     },
   });
-
-  // This works in the browser js console but not the web editor console
-  // because it presumably overrides `console.log` itself earlier
-  // for (const k in console) {
-  //   if (console[k] instanceof Function) {
-  //     const oldFn = console[k];
-  //     console[k] = function(...args) {
-  //       return oldFn.apply(this, args.map((arg) => {
-  //         if (arg instanceof Placeholder) {
-  //           return arg.value;
-  //         } else {
-  //           return arg;
-  //         }
-  //       }));
-  //     }
-  //   }
-  // }
 }
 
 if (typeof p5 !== "undefined") {
